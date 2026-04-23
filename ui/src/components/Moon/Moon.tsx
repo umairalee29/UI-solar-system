@@ -8,14 +8,16 @@ import { generatePlanetTexture } from '../../utils/planetTextures';
 interface Props {
   moon: MoonType;
   index: number;
-  parentPosition: Vector3;
+  paused: boolean;
   onSelect: (moon: MoonType) => void;
+  onWorldPos: (id: string, pos: [number, number, number]) => void;
 }
 
 const MOON_ORBIT_BASE = 3.5;
 const MOON_SIZE_BASE = 0.18;
+const _wp = new Vector3(); // reused to avoid per-frame allocation
 
-export function Moon({ moon, index, onSelect }: Props) {
+export function Moon({ moon, index, paused, onSelect, onWorldPos }: Props) {
   const groupRef = useRef<Group>(null);
   const meshRef = useRef<Mesh>(null);
   const texture = useMemo(() => generatePlanetTexture('moon'), []);
@@ -26,11 +28,14 @@ export function Moon({ moon, index, onSelect }: Props) {
   const initialAngle = (index * Math.PI * 2) / 6;
 
   useFrame((_, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += delta * orbitSpeed;
+    if (!paused) {
+      if (groupRef.current) groupRef.current.rotation.y += delta * orbitSpeed;
+      if (meshRef.current) meshRef.current.rotation.y += delta * 0.3;
     }
+    // Always report world position so App can look it up for camera fly
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.3;
+      meshRef.current.getWorldPosition(_wp);
+      onWorldPos(moon.id, [_wp.x, _wp.y, _wp.z]);
     }
   });
 

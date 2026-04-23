@@ -73,11 +73,11 @@ export function Scene({
   return (
     <Canvas
       camera={{ position: [0, 60, 130], fov: 55, near: 0.1, far: 2000 }}
-      style={{ width: '100vw', height: '100vh', background: '#000005' }}
+      style={{ width: '100vw', height: '100vh', background: 'radial-gradient(ellipse at center, #0a1628 0%, #040c18 45%, #010508 100%)' }}
     >
       <ambientLight intensity={0.08} />
 
-      <Stars radius={300} depth={60} count={6000} factor={4} saturation={0} fade speed={0.5} />
+      <Stars radius={300} depth={60} count={3500} factor={2.8} saturation={0.4} fade speed={0.3} />
 
       <Suspense fallback={null}>
         <Sun />

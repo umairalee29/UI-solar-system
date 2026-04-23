@@ -1,10 +1,10 @@
 .panel {
   position: fixed;
-  top: 50%;
+  top: 24px;
   right: 24px;
-  transform: translateY(-50%);
   width: 340px;
-  max-height: 85vh;
+  /* Fill viewport height minus top+bottom margins — never clips */
+  max-height: calc(100vh - 48px);
   background: rgba(6, 10, 22, 0.88);
   border: 1px solid rgba(100, 160, 255, 0.25);
   border-radius: 12px;

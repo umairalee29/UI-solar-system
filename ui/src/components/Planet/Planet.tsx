@@ -1,5 +1,6 @@
 import { useRef, useState, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { motion, AnimatePresence } from 'framer-motion';
 import type { Mesh, Group } from 'three';
 import { Html } from '@react-three/drei';
 import type { Planet as PlanetType, PlanetConfig, Moon as MoonType } from '../../types/solar';
@@ -38,8 +39,8 @@ export function Planet({
       if (meshRef.current) meshRef.current.rotation.y += delta * config.rotationSpeed * 10;
     }
 
-    // Smooth scale toward hover target
-    const targetScale = hovered ? 1.15 : 1.0;
+    // Smooth hover scale
+    const targetScale = hovered ? 1.1 : 1.0;
     hoverScaleRef.current += (targetScale - hoverScaleRef.current) * Math.min(delta * 10, 1);
     if (scaleGroupRef.current) scaleGroupRef.current.scale.setScalar(hoverScaleRef.current);
   });
@@ -54,7 +55,6 @@ export function Planet({
 
   return (
     <group ref={orbitGroupRef}>
-      {/* Scale group — grows smoothly on hover */}
       <group ref={scaleGroupRef}>
         <group rotation={[ringTiltRad, 0, 0]}>
           <mesh
@@ -71,11 +71,11 @@ export function Planet({
             />
           </mesh>
 
-          {/* Outer glow halo — visible on hover */}
+          {/* Subtle glow halo on hover */}
           {hovered && !isSelected && (
             <mesh>
-              <sphereGeometry args={[config.size * 1.28, 32, 32]} />
-              <meshBasicMaterial color="#5588ff" transparent opacity={0.08} side={2} depthWrite={false} />
+              <sphereGeometry args={[config.size * 1.18, 32, 32]} />
+              <meshBasicMaterial color="#5588ff" transparent opacity={0.07} side={2} depthWrite={false} />
             </mesh>
           )}
 
@@ -86,26 +86,52 @@ export function Planet({
             </mesh>
           )}
 
-          {hovered && !isSelected && (
-            <Html center distanceFactor={60} style={{ pointerEvents: 'none' }}>
-              <div style={{
-                background: 'rgba(4, 10, 28, 0.9)',
-                color: '#ddeeff',
-                padding: '6px 18px',
-                borderRadius: '24px',
-                fontSize: '11px',
-                fontWeight: 500,
-                whiteSpace: 'nowrap',
-                border: '1px solid rgba(100, 160, 255, 0.5)',
-                boxShadow: '0 0 18px rgba(60, 120, 255, 0.22), inset 0 0 8px rgba(60,100,255,0.05)',
-                letterSpacing: '0.06em',
-                transform: 'translateY(-10px)',
-                textTransform: 'uppercase' as const,
-              }}>
-                {planet.englishName}
-              </div>
-            </Html>
-          )}
+          {/* Tooltip — always rendered so AnimatePresence can exit-animate */}
+          <Html center distanceFactor={55} style={{ pointerEvents: 'none' }}>
+            <AnimatePresence>
+              {hovered && !isSelected && (
+                <motion.div
+                  key="tooltip"
+                  initial={{ opacity: 0, y: 12, scale: 0.82 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 6, scale: 0.9 }}
+                  transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                  style={{
+                    transform: 'translateY(-18px)',
+                    background: 'linear-gradient(135deg, rgba(8,18,45,0.95) 0%, rgba(4,10,28,0.95) 100%)',
+                    color: '#ffffff',
+                    padding: '10px 22px 8px',
+                    borderRadius: '28px',
+                    whiteSpace: 'nowrap',
+                    border: '1px solid rgba(120, 170, 255, 0.5)',
+                    boxShadow: '0 0 24px rgba(60, 120, 255, 0.28), 0 4px 16px rgba(0,0,0,0.5)',
+                    display: 'flex',
+                    flexDirection: 'column' as const,
+                    alignItems: 'center',
+                    gap: '3px',
+                  }}
+                >
+                  <span style={{
+                    fontSize: '15px',
+                    fontWeight: 600,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase' as const,
+                    color: '#e8f0ff',
+                  }}>
+                    {planet.englishName}
+                  </span>
+                  <span style={{
+                    fontSize: '10px',
+                    color: 'rgba(140, 180, 255, 0.7)',
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase' as const,
+                  }}>
+                    click to explore
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Html>
         </group>
       </group>
 

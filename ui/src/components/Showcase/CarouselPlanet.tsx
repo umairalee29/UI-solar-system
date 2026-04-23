@@ -129,6 +129,7 @@ export function CarouselPlanet({
           key={moon.id}
           moon={moon}
           index={i}
+          isSelected={false}
           paused={false}
           onSelect={(m) => onSelectMoon(m, planet)}
           onWorldPos={onMoonWorldPos}

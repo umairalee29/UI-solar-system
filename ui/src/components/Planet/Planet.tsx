@@ -11,6 +11,7 @@ interface Props {
   planet: PlanetType;
   config: PlanetConfig;
   isSelected: boolean;
+  selectedMoonId: string | null;
   paused: boolean;
   onSelect: (planet: PlanetType, worldPos: [number, number, number]) => void;
   onSelectMoon: (moon: MoonType, planet: PlanetType) => void;
@@ -19,7 +20,7 @@ interface Props {
 }
 
 export function Planet({
-  planet, config, isSelected, paused,
+  planet, config, isSelected, selectedMoonId, paused,
   onSelect, onSelectMoon, onMoonWorldPos, showMoons,
 }: Props) {
   const orbitGroupRef = useRef<Group>(null);
@@ -140,6 +141,7 @@ export function Planet({
           key={moon.id}
           moon={moon}
           index={i}
+          isSelected={selectedMoonId === moon.id}
           paused={paused}
           onSelect={(m) => onSelectMoon(m, planet)}
           onWorldPos={onMoonWorldPos}

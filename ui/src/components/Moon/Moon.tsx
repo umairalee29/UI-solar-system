@@ -8,6 +8,7 @@ import { generatePlanetTexture } from '../../utils/planetTextures';
 interface Props {
   moon: MoonType;
   index: number;
+  isSelected: boolean;
   paused: boolean;
   onSelect: (moon: MoonType) => void;
   onWorldPos: (id: string, pos: [number, number, number]) => void;
@@ -17,7 +18,7 @@ const MOON_ORBIT_BASE = 3.5;
 const MOON_SIZE_BASE = 0.18;
 const _wp = new Vector3(); // reused to avoid per-frame allocation
 
-export function Moon({ moon, index, paused, onSelect, onWorldPos }: Props) {
+export function Moon({ moon, index, isSelected, paused, onSelect, onWorldPos }: Props) {
   const groupRef = useRef<Group>(null);
   const meshRef = useRef<Mesh>(null);
   const texture = useMemo(() => generatePlanetTexture('moon'), []);
@@ -49,7 +50,11 @@ export function Moon({ moon, index, paused, onSelect, onWorldPos }: Props) {
         onPointerOut={() => { document.body.style.cursor = 'default'; }}
       >
         <sphereGeometry args={[size, 32, 32]} />
-        <meshStandardMaterial map={texture} />
+        <meshStandardMaterial
+          map={texture}
+          emissive={isSelected ? '#ccdeff' : '#000000'}
+          emissiveIntensity={isSelected ? 0.55 : 0}
+        />
       </mesh>
     </group>
   );

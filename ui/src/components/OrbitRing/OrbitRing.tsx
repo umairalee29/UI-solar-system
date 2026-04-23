@@ -8,7 +8,7 @@ interface Props {
   opacity?: number;
 }
 
-export function OrbitRing({ radius, segments = 128, opacity = 0.2 }: Props) {
+export function OrbitRing({ radius, segments = 128, opacity = 0.38 }: Props) {
   const points = useMemo(() => {
     const pts: Vector3[] = [];
     for (let i = 0; i <= segments; i++) {
@@ -19,6 +19,6 @@ export function OrbitRing({ radius, segments = 128, opacity = 0.2 }: Props) {
   }, [radius, segments]);
 
   return (
-    <Line points={points} color="white" transparent opacity={opacity} lineWidth={0.4} />
+    <Line points={points} color="#8ab0d0" transparent opacity={opacity} lineWidth={0.7} />
   );
 }

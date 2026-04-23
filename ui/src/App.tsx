@@ -30,6 +30,8 @@ export default function App() {
     selected?.type === 'moon'   ? selected.parentPlanet.id :
     null;
 
+  const selectedMoonId = selected?.type === 'moon' ? selected.moon.id : null;
+
   const handleMoonWorldPos = useCallback((id: string, pos: [number, number, number]) => {
     moonWorldPos.current.set(id, pos);
   }, []);
@@ -52,10 +54,17 @@ export default function App() {
         </div>
       )}
 
+      {/* Heading */}
+      <div className={styles.heading}>
+        <h1 className={styles.headingTitle}>Solar System</h1>
+        <div className={styles.headingRule} />
+      </div>
+
       {!loading && (
         <Scene
           planets={planets}
           selectedPlanetId={selectedPlanetId}
+          selectedMoonId={selectedMoonId}
           paused={paused}
           flyTarget={flyTarget}
           onSelectPlanet={selectPlanet}

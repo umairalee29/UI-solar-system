@@ -59,6 +59,7 @@ function CameraRig({ flyTarget }: { flyTarget: FlyTarget | null }) {
 interface Props {
   planets: PlanetType[];
   selectedPlanetId: string | null;
+  selectedMoonId: string | null;
   paused: boolean;
   flyTarget: FlyTarget | null;
   onSelectPlanet: (planet: PlanetType, worldPos: [number, number, number]) => void;
@@ -67,7 +68,7 @@ interface Props {
 }
 
 export function Scene({
-  planets, selectedPlanetId, paused, flyTarget,
+  planets, selectedPlanetId, selectedMoonId, paused, flyTarget,
   onSelectPlanet, onSelectMoon, onMoonWorldPos,
 }: Props) {
   return (
@@ -92,6 +93,7 @@ export function Scene({
                 planet={planet}
                 config={config}
                 isSelected={selectedPlanetId === planet.id}
+                selectedMoonId={selectedMoonId}
                 paused={paused}
                 onSelect={onSelectPlanet}
                 onSelectMoon={onSelectMoon}

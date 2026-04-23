@@ -1,47 +1,65 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Scene } from './components/SolarSystem/Scene';
-import { InfoPanel } from './components/InfoPanel/InfoPanel';
+import { Showcase } from './components/Showcase/Showcase';
+import { PlanetHero } from './components/PlanetHero/PlanetHero';
+import { StatsSection } from './components/StatsSection/StatsSection';
 import { LoadingScreen } from './components/LoadingScreen/LoadingScreen';
 import { usePlanets } from './hooks/usePlanets';
-import { useSelection } from './hooks/useSelection';
+import { useCarousel } from './hooks/useCarousel';
+import { getPlanetById } from './services/api';
 import type { Moon, Planet } from './types/solar';
 import styles from './App.module.css';
 
 export default function App() {
   const { planets, loading, error } = usePlanets();
-  const {
-    selected, detailedPlanet, loadingDetail,
-    paused, flyTarget,
-    selectPlanet, selectMoon, clear,
-  } = useSelection();
+  const { currentIndex, navigate, goTo, moonFlyTarget, selectMoon, clearMoon } =
+    useCarousel(planets.length);
 
-  // Populated each frame by Moon components — keyed by moon.id
+  const [detailedPlanet, setDetailedPlanet] = useState<Planet | null>(null);
+  const [loadingDetail, setLoadingDetail] = useState(false);
+
   const moonWorldPos = useRef<Map<string, [number, number, number]>>(new Map());
 
+  // Fetch full planet detail (with moons) when selection changes
   useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => { if (e.key === 'Escape') clear(); };
+    if (planets.length === 0) return;
+    const planet = planets[currentIndex];
+    setDetailedPlanet(planet);
+    if (planet.moonCount > 0 && planet.moons.length === 0) {
+      setLoadingDetail(true);
+      getPlanetById(planet.id)
+        .then((detail) => setDetailedPlanet(detail))
+        .catch(() => { /* keep basic data */ })
+        .finally(() => setLoadingDetail(false));
+    } else {
+      setLoadingDetail(false);
+    }
+  }, [currentIndex, planets]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft')  navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+      if (e.key === 'Escape')     clearMoon();
+    };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [clear]);
-
-  const selectedPlanetId =
-    selected?.type === 'planet' ? selected.planet.id :
-    selected?.type === 'moon'   ? selected.parentPlanet.id :
-    null;
+  }, [navigate, clearMoon]);
 
   const handleMoonWorldPos = useCallback((id: string, pos: [number, number, number]) => {
     moonWorldPos.current.set(id, pos);
   }, []);
 
-  // Both InfoPanel moon clicks and 3D moon clicks route through here so world pos is always resolved
   const handleSelectMoon = useCallback((moon: Moon, parentPlanet: Planet) => {
-    const pos = moonWorldPos.current.get(moon.id) ?? [0, 0, 0] as [number, number, number];
+    const pos = moonWorldPos.current.get(moon.id) ?? ([0, 0, 0] as [number, number, number]);
     selectMoon(moon, parentPlanet, pos);
   }, [selectMoon]);
 
+  const selectedPlanet = planets.length > 0 ? planets[currentIndex] : null;
+
   return (
-    <div className={styles.app}>
+    <div className={styles.root}>
       <AnimatePresence>
         {loading && <LoadingScreen />}
       </AnimatePresence>
@@ -52,30 +70,36 @@ export default function App() {
         </div>
       )}
 
-      {!loading && (
-        <Scene
-          planets={planets}
-          selectedPlanetId={selectedPlanetId}
-          paused={paused}
-          flyTarget={flyTarget}
-          onSelectPlanet={selectPlanet}
-          onSelectMoon={handleSelectMoon}
-          onMoonWorldPos={handleMoonWorldPos}
-        />
-      )}
+      <div className={styles.scroll}>
+        {/* ── Sticky hero: 3D canvas + HTML overlay ── */}
+        <div className={styles.hero}>
+          {!loading && (
+            <Showcase
+              planets={planets}
+              currentIndex={currentIndex}
+              moonFlyTarget={moonFlyTarget}
+              onNavigate={navigate}
+              onMoonWorldPos={handleMoonWorldPos}
+              onSelectMoon={handleSelectMoon}
+            />
+          )}
+          <PlanetHero
+            planet={selectedPlanet}
+            currentIndex={currentIndex}
+            totalPlanets={planets.length}
+            onNavigate={navigate}
+            onGoTo={goTo}
+          />
+        </div>
 
-      <InfoPanel
-        selected={selected}
-        detailedPlanet={detailedPlanet}
-        loadingDetail={loadingDetail}
-        onClose={clear}
-        onSelectMoon={handleSelectMoon}
-      />
-
-      <div className={styles.hint}>
-        <span>Scroll to zoom</span>
-        <span>Drag to rotate</span>
-        <span>Click a planet to explore</span>
+        {/* ── Stats scroll-behind section ── */}
+        <div className={styles.stats}>
+          <StatsSection
+            planet={detailedPlanet}
+            loadingDetail={loadingDetail}
+            onSelectMoon={handleSelectMoon}
+          />
+        </div>
       </div>
     </div>
   );

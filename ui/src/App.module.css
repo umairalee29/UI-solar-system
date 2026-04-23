@@ -1,10 +1,29 @@
-.app {
-  width: 100vw;
+.root {
+  background: #000;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Outer scrollable column */
+.scroll {
+  height: 200vh;
+}
+
+/* Sticky 3-D hero — stays pinned while stats scroll up */
+.hero {
+  position: sticky;
+  top: 0;
   height: 100vh;
-  position: relative;
   overflow: hidden;
 }
 
+/* Stats panel sits below and scrolls over the hero */
+.stats {
+  position: relative;
+  z-index: 10;
+}
+
+/* ── Error toast ──────────────────────────────────────────────────────────── */
 .error {
   position: fixed;
   top: 20px;
@@ -26,27 +45,4 @@
   border-radius: 4px;
   cursor: pointer;
   margin-left: 8px;
-}
-
-.hint {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 24px;
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  pointer-events: none;
-  user-select: none;
-}
-
-@media (max-width: 600px) {
-  .hint {
-    gap: 12px;
-    font-size: 0.62rem;
-    bottom: 60px;
-  }
 }

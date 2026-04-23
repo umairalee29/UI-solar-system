@@ -1,0 +1,13 @@
+{
+  "name": "solsys",
+  "private": true,
+  "workspaces": ["ui", "backend"],
+  "scripts": {
+    "dev": "concurrently -n backend,ui -c cyan,magenta \"npm run dev --workspace=backend\" \"npm run dev --workspace=ui\"",
+    "build": "npm run build --workspace=backend && npm run build --workspace=ui",
+    "lint": "npm run lint --workspace=ui"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

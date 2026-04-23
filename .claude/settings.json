@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev*)",
+      "Bash(npm run build*)",
+      "Bash(npm run lint*)",
+      "Bash(npm install*)",
+      "Bash(npm ci*)",
+      "Bash(mkdir -p *)",
+      "Bash(curl -L * -o ui/public/textures/*)"
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(npx ts-node *)",
+      "Bash(curl -s http://localhost:3001/health)",
+      "Bash(curl -s \"http://localhost:3001/api/planets\")",
+      "Bash(curl -s \"https://api.le-systeme-solaire.net/rest/bodies/?filter%5B%5D=isPlanet%2Ceq%2Ctrue\")",
+      "Bash(pkill -f \"ts-node src/index.ts\")",
+      "Bash(pkill -f \"ts-node\")",
+      "Bash(curl -s http://localhost:3001/api/planets)",
+      "Read(//tmp/**)",
+      "Bash(node -e ' *)",
+      "Bash(pkill -f \"node dist/index.js\")",
+      "Bash(node dist/index.js)",
+      "Bash(netstat -ano)",
+      "Bash(npx vite *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173/)",
+      "Bash(curl -s http://localhost:3001/api/planets/terre)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f\\\\\"Planet: {d['englishName']}, Moons: {d['moonCount']}, Gravity: {d['gravity']}\\\\\"\\)\")",
+      "PowerShell(Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force)",
+      "PowerShell(Get-ExecutionPolicy -Scope CurrentUser)",
+      "Bash(curl -s -o /dev/null -w \"Frontend: %{http_code}\" http://localhost:5173/)"
+    ]
+  }
+}

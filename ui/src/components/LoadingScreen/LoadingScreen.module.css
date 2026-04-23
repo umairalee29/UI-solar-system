@@ -1,0 +1,77 @@
+.container {
+  position: fixed;
+  inset: 0;
+  background: #000008;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.solar {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.sun {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px;
+  background: radial-gradient(circle, #fff6a0, #ffaa00);
+  border-radius: 50%;
+  box-shadow: 0 0 20px 6px rgba(255, 160, 0, 0.6);
+}
+
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
+  animation: spin calc(var(--i) * 1.2s) linear infinite;
+  transform-origin: center center;
+}
+
+.orbit:nth-child(2) {
+  width: 44px; height: 44px;
+  margin: -22px;
+}
+.orbit:nth-child(3) {
+  width: 76px; height: 76px;
+  margin: -38px;
+  animation-duration: 2.4s;
+}
+.orbit:nth-child(4) {
+  width: 112px; height: 112px;
+  margin: -56px;
+  animation-duration: 4s;
+}
+
+.planet {
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  margin-left: -3px;
+  width: 6px;
+  height: 6px;
+  background: #7ab4ff;
+  border-radius: 50%;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.text {
+  margin-top: 28px;
+  color: #4a6ea0;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}

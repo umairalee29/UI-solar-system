@@ -93,39 +93,41 @@ export function Planet({
               {hovered && !isSelected && (
                 <motion.div
                   key="tooltip"
-                  initial={{ opacity: 0, y: 12, scale: 0.82 }}
+                  initial={{ opacity: 0, y: 14, scale: 0.78 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 6, scale: 0.9 }}
-                  transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                  exit={{ opacity: 0, y: 8, scale: 0.88 }}
+                  transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
                   style={{
-                    transform: 'translateY(-18px)',
-                    background: 'linear-gradient(135deg, rgba(8,18,45,0.95) 0%, rgba(4,10,28,0.95) 100%)',
-                    color: '#ffffff',
-                    padding: '10px 22px 8px',
-                    borderRadius: '28px',
+                    transform: 'translateY(-22px)',
+                    background: 'rgba(0, 0, 0, 0.82)',
+                    backdropFilter: 'blur(8px)',
+                    padding: '12px 26px 10px',
+                    borderRadius: '32px',
                     whiteSpace: 'nowrap',
-                    border: '1px solid rgba(120, 170, 255, 0.5)',
-                    boxShadow: '0 0 24px rgba(60, 120, 255, 0.28), 0 4px 16px rgba(0,0,0,0.5)',
+                    border: '1.5px solid rgba(255, 170, 80, 0.7)',
+                    boxShadow: '0 0 28px rgba(255, 140, 40, 0.35), 0 6px 24px rgba(0,0,0,0.7)',
                     display: 'flex',
                     flexDirection: 'column' as const,
                     alignItems: 'center',
-                    gap: '3px',
+                    gap: '4px',
                   }}
                 >
                   <span style={{
-                    fontSize: '15px',
-                    fontWeight: 600,
-                    letterSpacing: '0.1em',
+                    fontSize: '17px',
+                    fontWeight: 700,
+                    letterSpacing: '0.12em',
                     textTransform: 'uppercase' as const,
-                    color: '#e8f0ff',
+                    color: '#ffffff',
+                    textShadow: '0 0 12px rgba(255, 160, 60, 0.6)',
                   }}>
                     {planet.englishName}
                   </span>
                   <span style={{
-                    fontSize: '10px',
-                    color: 'rgba(140, 180, 255, 0.7)',
-                    letterSpacing: '0.08em',
+                    fontSize: '11px',
+                    color: 'rgba(255, 190, 110, 0.85)',
+                    letterSpacing: '0.1em',
                     textTransform: 'uppercase' as const,
+                    fontWeight: 400,
                   }}>
                     click to explore
                   </span>

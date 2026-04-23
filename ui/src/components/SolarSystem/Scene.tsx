@@ -73,7 +73,7 @@ export function Scene({
 }: Props) {
   return (
     <Canvas
-      camera={{ position: [0, 60, 130], fov: 55, near: 0.1, far: 2000 }}
+      camera={{ position: [-40, 18, 160], fov: 62, near: 0.1, far: 2000 }}
       style={{ width: '100vw', height: '100vh', background: 'radial-gradient(ellipse at center, #0a1628 0%, #040c18 45%, #010508 100%)' }}
     >
       <ambientLight intensity={0.08} />

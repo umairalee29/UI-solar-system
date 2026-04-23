@@ -65,7 +65,7 @@ export function useSelection(): UseSelectionResult {
     setDetailedPlanet(null);
     setPaused(false);
     // Fly back to the default overview camera position
-    setFlyTarget({ position: [0, 60, 130], lookAt: [0, 0, 0] });
+    setFlyTarget({ position: [-40, 18, 160], lookAt: [0, 0, 0] });
   }, []);
 
   return { selected, detailedPlanet, loadingDetail, paused, flyTarget, selectPlanet, selectMoon, clear };

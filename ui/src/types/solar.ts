@@ -62,12 +62,12 @@ export interface PlanetConfig {
 }
 
 export const PLANET_CONFIGS: Record<string, PlanetConfig> = {
-  mercure: { id: 'mercure', textureFile: 'mercury.jpg', orbitRadius: 14, size: 0.38, orbitSpeed: 1.607, rotationSpeed: 0.003, tilt: 0.034 },
-  venus:   { id: 'venus',   textureFile: 'venus.jpg',   orbitRadius: 20, size: 0.95, orbitSpeed: 1.174, rotationSpeed: -0.002, tilt: 177.36 },
-  terre:   { id: 'terre',   textureFile: 'earth.jpg',   orbitRadius: 28, size: 1.0,  orbitSpeed: 1.0,   rotationSpeed: 0.01,  tilt: 23.44 },
-  mars:    { id: 'mars',    textureFile: 'mars.jpg',     orbitRadius: 37, size: 0.53, orbitSpeed: 0.808, rotationSpeed: 0.009, tilt: 25.19 },
-  jupiter: { id: 'jupiter', textureFile: 'jupiter.jpg', orbitRadius: 56, size: 3.5,  orbitSpeed: 0.434, rotationSpeed: 0.04,  tilt: 3.13 },
-  saturne: { id: 'saturne', textureFile: 'saturn.jpg',  orbitRadius: 76, size: 2.9,  orbitSpeed: 0.323, rotationSpeed: 0.038, tilt: 26.73, hasRings: true, ringColor: '#c2a060' },
-  uranus:  { id: 'uranus',  textureFile: 'uranus.jpg',  orbitRadius: 94, size: 1.8,  orbitSpeed: 0.228, rotationSpeed: -0.03, tilt: 97.77 },
-  neptune: { id: 'neptune', textureFile: 'neptune.jpg', orbitRadius: 110, size: 1.7, orbitSpeed: 0.182, rotationSpeed: 0.032, tilt: 28.32 },
+  mercure: { id: 'mercure', textureFile: 'mercury.jpg', orbitRadius: 14, size: 0.55, orbitSpeed: 1.607, rotationSpeed: 0.003, tilt: 0.034 },
+  venus:   { id: 'venus',   textureFile: 'venus.jpg',   orbitRadius: 20, size: 1.35, orbitSpeed: 1.174, rotationSpeed: -0.002, tilt: 177.36 },
+  terre:   { id: 'terre',   textureFile: 'earth.jpg',   orbitRadius: 28, size: 1.4,  orbitSpeed: 1.0,   rotationSpeed: 0.01,  tilt: 23.44 },
+  mars:    { id: 'mars',    textureFile: 'mars.jpg',     orbitRadius: 37, size: 0.75, orbitSpeed: 0.808, rotationSpeed: 0.009, tilt: 25.19 },
+  jupiter: { id: 'jupiter', textureFile: 'jupiter.jpg', orbitRadius: 56, size: 4.8,  orbitSpeed: 0.434, rotationSpeed: 0.04,  tilt: 3.13 },
+  saturne: { id: 'saturne', textureFile: 'saturn.jpg',  orbitRadius: 76, size: 4.0,  orbitSpeed: 0.323, rotationSpeed: 0.038, tilt: 26.73, hasRings: true, ringColor: '#c2a060' },
+  uranus:  { id: 'uranus',  textureFile: 'uranus.jpg',  orbitRadius: 94, size: 2.5,  orbitSpeed: 0.228, rotationSpeed: -0.03, tilt: 97.77 },
+  neptune: { id: 'neptune', textureFile: 'neptune.jpg', orbitRadius: 110, size: 2.4, orbitSpeed: 0.182, rotationSpeed: 0.032, tilt: 28.32 },
 };
